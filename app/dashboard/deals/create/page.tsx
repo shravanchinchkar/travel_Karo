@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -17,7 +17,7 @@ import {
 // import { supabase } from "@/lib/supabase";
 
 export default function CreateDeal() {
-  const router = useRouter();
+  // const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
