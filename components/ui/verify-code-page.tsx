@@ -44,7 +44,7 @@ export const VerifyCodePage = () => {
       }
     } else {
       toast.success("Email verified!", toastStyle);
-      router.push("/");
+      router.push("/dashboard");
     }
   };
 
