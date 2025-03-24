@@ -46,20 +46,17 @@ export async function registerTravelAgent(
             verifyCodeExpiry: expiryDate,
           },
         });
-
         // Send verification email for the unverified user
         const emailResponse = await sendVerificationEmail(
           travelAgentDetails.businessName,
           travelAgentDetails.email,
           verifyCode
         );
-
         // If error while sending email
         if (!emailResponse.success) {
           console.log("email not send message:", emailResponse.message);
           return { success: false, message: emailResponse.message };
         }
-
         console.log("email success message:", emailResponse);
         // If success in sending email
         return {
@@ -81,7 +78,6 @@ export async function registerTravelAgent(
           verifyCodeExpiry: expiryDate,
         },
       });
-
       // If new fresh user can't be created then
       if (!newTravelAgent) {
         console.error("Please try again! Can't create the account");
@@ -90,9 +86,7 @@ export async function registerTravelAgent(
           message: "Please try again! Can't create the account",
         };
       }
-
       console.log("New TravelAgent Created", newTravelAgent);
-
       // If the new fresh user is created, then send an otp to the user's email to verify
       const emailResponse = await sendVerificationEmail(
         newTravelAgent.businessName,
@@ -169,7 +163,7 @@ export async function verifyCode({
     }
     return { success: true, message: "Email verified successfully" };
   } catch (err) {
-    console.error("Error verifying end-user otp");
+    console.error("Error verifying end-user otp",err);
     return {
       success: false,
       error: "Error verifying end-user otp",
