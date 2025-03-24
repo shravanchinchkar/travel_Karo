@@ -33,10 +33,7 @@ export const RegisterUser = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const validateUserInput = feRegisterTravelAgentInputs.safeParse(formData);
-
-
     // If Input is invalid the 
     if (!validateUserInput.success) {
       console.log(

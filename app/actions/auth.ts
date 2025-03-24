@@ -18,6 +18,7 @@ export async function registerTravelAgent(
   travelAgentDetails: beTravelAgentTypes
 ): Promise<ResponseType> {
   try {
+    console.log("Travel Agent Details:",travelAgentDetails)
     const existingTravelAgent = await client.travelAgent.findUnique({
       where: {
         email: travelAgentDetails.email,
