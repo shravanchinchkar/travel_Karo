@@ -83,7 +83,7 @@ export const RegisterUser = () => {
           >
             <h1 className="text-[3rem] font-bold">Travel Karo</h1>
             <h2 className="text-lg  text-gray-600 ml-[0.5rem]">
-              File is a journey
+              Life is a journey
             </h2>
           </Link>
 

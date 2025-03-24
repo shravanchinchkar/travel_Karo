@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { dealTypes } from "@/types/DealTypes";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -14,10 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { supabase } from "@/lib/supabase";
 
-export const CreateDeals=()=>{
-  // const router = useRouter();
+export const CreateDeals = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -27,46 +27,52 @@ export const CreateDeals=()=>{
     endDate: "",
     spots: "",
   });
+  const [inputError, setInputError] = useState({
+    titleError: "",
+    descriptionError: "",
+    priceError: "",
+    categoryError: "",
+    startDateError: "",
+    endDateError: "",
+    spotsError: "",
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // try {
-    //   const {
-    //     data: { user },
-    //   } = await supabase.auth.getUser();
-
-    //   if (!user) {
-    //     throw new Error("Not authenticated");
-    //   }
-
-    //   const { error } = await supabase.from("deals").insert({
-    //     title: formData.title,
-    //     description: formData.description,
-    //     price: parseFloat(formData.price),
-    //     category: formData.category,
-    //     start_date: formData.startDate,
-    //     end_date: formData.endDate,
-    //     spots_available: parseInt(formData.spots),
-    //     created_by: user.id,
-    //   });
-
-    //   if (error) throw error;
-
-    //   router.push("/dashboard");
-    // } catch (error) {
-    //   console.error("Error creating deal:", error);
-    // }
+  const handleSubmitDeal = async () => {
+    console.log("Form Data is:", formData);
+    const validateInput = dealTypes.safeParse(formData);
+    if (!validateInput.success) {
+      setInputError({
+        titleError:
+          validateInput.error.flatten().fieldErrors.title?.toString() || "",
+        descriptionError:
+          validateInput.error.flatten().fieldErrors.description?.toString() ||
+          "",
+        priceError:
+          validateInput.error.flatten().fieldErrors.price?.toString() || "",
+        categoryError:
+          validateInput.error.flatten().fieldErrors.category?.toString() || "",
+        startDateError:
+          validateInput.error.flatten().fieldErrors.startDate?.toString() || "",
+        endDateError:
+          validateInput.error.flatten().fieldErrors.endDate?.toString() || "",
+        spotsError:
+          validateInput.error.flatten().fieldErrors.spots?.toString() || "",
+      });
+    } else {
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Card className="p-8">
+        <Card className="p-8 bg-white">
           <h1 className="text-2xl font-bold mb-8">Create New Deal</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form className="space-y-6">
             <div>
+              {inputError.titleError ? (
+                <div className="text-red-500">{inputError.titleError}</div>
+              ) : null}
               <Label htmlFor="title">Deal Title</Label>
               <Input
                 id="title"
@@ -79,6 +85,11 @@ export const CreateDeals=()=>{
             </div>
 
             <div>
+              {inputError.descriptionError ? (
+                <div className="text-red-500">
+                  {inputError.descriptionError}
+                </div>
+              ) : null}
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
@@ -92,6 +103,9 @@ export const CreateDeals=()=>{
 
             <div className="grid grid-cols-2 gap-4">
               <div>
+                {inputError.priceError ? (
+                  <div className="text-red-500">{inputError.priceError}</div>
+                ) : null}
                 <Label htmlFor="price">Price</Label>
                 <Input
                   id="price"
@@ -105,6 +119,9 @@ export const CreateDeals=()=>{
               </div>
 
               <div>
+                {inputError.categoryError ? (
+                  <div className="text-red-500">{inputError.categoryError}</div>
+                ) : null}
                 <Label htmlFor="category">Category</Label>
                 <Select
                   value={formData.category}
@@ -115,11 +132,31 @@ export const CreateDeals=()=>{
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="flight">Flight</SelectItem>
-                    <SelectItem value="hotel">Hotel</SelectItem>
-                    <SelectItem value="package">Package</SelectItem>
-                    <SelectItem value="activity">Activity</SelectItem>
+                  <SelectContent className="bg-white">
+                    <SelectItem
+                      value="flight"
+                      className="hover:bg-blue-500 cursor-pointer hover:text-white"
+                    >
+                      Flight
+                    </SelectItem>
+                    <SelectItem
+                      value="hotel"
+                      className="hover:bg-blue-500 cursor-pointer hover:text-white"
+                    >
+                      Hotel
+                    </SelectItem>
+                    <SelectItem
+                      value="package"
+                      className="hover:bg-blue-500 cursor-pointer hover:text-white"
+                    >
+                      Package
+                    </SelectItem>
+                    <SelectItem
+                      value="activity"
+                      className="hover:bg-blue-500 cursor-pointer hover:text-white"
+                    >
+                      Activity
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -127,6 +164,9 @@ export const CreateDeals=()=>{
 
             <div className="grid grid-cols-2 gap-4">
               <div>
+              {inputError.startDateError ? (
+                <div className="text-red-500">{inputError.startDateError}</div>
+              ) : null}
                 <Label htmlFor="startDate">Start Date</Label>
                 <Input
                   id="startDate"
@@ -140,6 +180,9 @@ export const CreateDeals=()=>{
               </div>
 
               <div>
+                {inputError.endDateError ? (
+                  <div className="text-red-500">{inputError.endDateError}</div>
+                ) : null}
                 <Label htmlFor="endDate">End Date</Label>
                 <Input
                   id="endDate"
@@ -154,6 +197,9 @@ export const CreateDeals=()=>{
             </div>
 
             <div>
+              {inputError.spotsError ? (
+                <div className="text-red-500">{inputError.spotsError}</div>
+              ) : null}
               <Label htmlFor="spots">Available Spots</Label>
               <Input
                 id="spots"
@@ -166,7 +212,10 @@ export const CreateDeals=()=>{
               />
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button
+              onClick={handleSubmitDeal}
+              className="w-full bg-blue-600 text-white"
+            >
               Create Deal
             </Button>
           </form>
@@ -174,4 +223,4 @@ export const CreateDeals=()=>{
       </div>
     </div>
   );
-}
+};
