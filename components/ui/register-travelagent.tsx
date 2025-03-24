@@ -33,6 +33,7 @@ export const RegisterUser = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const validateUserInput = feRegisterTravelAgentInputs.safeParse(formData);
     // If Input is invalid the 
     if (!validateUserInput.success) {
@@ -72,7 +73,7 @@ export const RegisterUser = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md space-y-8 p-8 bg-white border-gray-400">
         <div className="flex flex-col items-center">
           <Link

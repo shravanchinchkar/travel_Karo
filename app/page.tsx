@@ -2,33 +2,13 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plane, Hotel, Globe, Users } from "lucide-react";
+import { NavBar } from "@/components/ui/nav-sestion";
 
 export default function Home() {
   return (
     <>
       <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-[2rem]">
-        <nav className="flex justify-between items-center mx-[9rem]">
-          <Link
-            className="flex flex-col items-start gap-0 leading-[40px]"
-            href="/"
-          >
-            <h1 className="text-[3rem] font-bold text-gray-900">Travel Karo</h1>
-            <h2 className="text-lg  text-gray-600 ml-[0.5rem]">
-              Life is a journey
-            </h2>
-          </Link>
-
-          <Link href="/signin">
-            <Button
-              className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white"
-              variant="outline"
-              size="lg"
-            >
-              Sign In
-            </Button>
-          </Link>
-        </nav>
-
+        <NavBar/>
         {/* Hero Section */}
         <div className="relative px-6 lg:px-8">
           <div className="mx-auto max-w-7xl py-24 sm:py-32">
