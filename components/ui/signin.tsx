@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toastStyle } from "@/lib/toast-style";
 import { feSignInInputs } from "@/types/SigninTyes";
+import { LoadingUI } from "./loading-ui";
 
 export const LoginUser = () => {
   const router = useRouter();
@@ -26,10 +27,9 @@ export const LoginUser = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async () => {
-    // Validate the input
     const validateUserInput = feSignInInputs.safeParse(formData);
+
     if (!validateUserInput.success) {
-      console.log("Invalid SignIn Inputs:", formData);
       setInputError({
         emailError:
           validateUserInput.error.flatten().fieldErrors.email?.toString() || "",
@@ -37,14 +37,15 @@ export const LoginUser = () => {
           validateUserInput.error.flatten().fieldErrors.password?.toString() ||
           "",
       });
-    } else {
+    }
+    else{
       setLoading(true);
-      const res = await signIn("credentials", {
-        email: formData.email,
-        password: formData.password,
-        redirect: false,
-      });
-      console.log("Response to FE:", res);
+      const res=await signIn("credentials",{
+        email:formData.email,
+        password:formData.password,
+        redirect:false
+      })
+      console.log("SignIn Resposne:",res);
       setLoading(false);
 
       if (res?.error) {
@@ -56,7 +57,8 @@ export const LoginUser = () => {
         };
         console.log("signin  error :", errorResponse);
         toast.error("Signin Failed", toastStyle);
-      } else if (res?.ok) {
+      }
+      else if (res?.ok) {
         // Check session to determine verification status
         const sessionResponse = await fetch("/api/auth/session");
         const session = await sessionResponse.json();
@@ -65,7 +67,7 @@ export const LoginUser = () => {
         if (session?.user?.isVerified) {
           console.log("Email already Verified signin successful!");
           toast.success("Signin successful!", toastStyle);
-          router.push("/dashboard");
+          router.push("/");
         } else {
           console.log("Email not verified, redirecting to verify!");
           router.push(`/verify?email=${formData.email}`);
@@ -128,12 +130,13 @@ export const LoginUser = () => {
           <Button
             className="w-full text-white cursor-pointer bg-blue-600 hover:bg-blue-700"
             onClick={handleSignIn}
+            disabled={loading}
           >
-            Sign in
+            {loading?<LoadingUI/>:"Sign in"}
           </Button>
 
           {/* Following is the signin with google button */}
-          <button
+          {/* <button
             className="lg:w-[13rem] lg:h-[3rem] 2xl:w-[13rem] 2xl:h-[3.5rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full cursor-pointer"
             disabled={loading}
             onClick={async () => {
@@ -201,7 +204,7 @@ export const LoginUser = () => {
                 "Sign in with Google"
               )}
             </div>
-          </button>
+          </button> */}
         </div>
         <div className="text-center text-sm">
           Don&apos;t have an account?{" "}
