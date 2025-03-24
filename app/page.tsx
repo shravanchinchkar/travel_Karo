@@ -8,9 +8,9 @@ export default function Home() {
     <>
       <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-[2rem]">
 
-        <nav className="flex justify-start text-gray-900">
+        <nav className="flex justify-start">
           <Link className="flex flex-col items-start gap-0 leading-[40px] ml-[9rem]" href="/"> 
-            <h1 className="text-[3rem] font-bold">Travel Karo</h1>
+            <h1 className="text-[3rem] font-bold text-gray-900">Travel Karo</h1>
             <h2 className="text-lg  text-gray-600 ml-[0.5rem]">Life is a journey</h2>
           </Link>
         </nav>
@@ -35,7 +35,7 @@ export default function Home() {
                     Get Started
                   </Button>
                 </Link>
-                <Link href="/auth/login">
+                <Link href="/auth/signin">
                   <Button className="cursor-pointer" variant="outline" size="lg">
                     Sign In
                   </Button>

@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function Login() {
+
+export const LoginUser = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -60,7 +61,7 @@ export default function Login() {
           </div>
 
           <div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full bg-gray-900 text-white">
               Sign in
             </Button>
           </div>
@@ -77,4 +78,4 @@ export default function Login() {
       </Card>
     </div>
   );
-}
+};

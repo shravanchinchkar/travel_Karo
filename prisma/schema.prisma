@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TravelAgent {
+  id               String    @id @default(uuid())
+  businessName     String
+  email            String    @unique
+  password         String
+  location         String
+  phoneNumber      String
+  isOAuth          Boolean   @default(false)
+  verifyCode       String?
+  verifyCodeExpiry DateTime?
+  isVerified       Boolean   @default(false)
+}
