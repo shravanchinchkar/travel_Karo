@@ -18,7 +18,7 @@ export default function Home() {
             </h2>
           </Link>
 
-          <Link href="/auth/signin">
+          <Link href="/signin">
             <Button
               className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white"
               variant="outline"
@@ -41,7 +41,7 @@ export default function Home() {
                 deals, connect with service providers, and grow your business.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link href="/auth/register">
+                <Link href="/register">
                   <Button
                     size="lg"
                     className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
