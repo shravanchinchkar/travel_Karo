@@ -55,7 +55,7 @@ export async function registerTravelAgent(
         // If error while sending email
         if (!emailResponse.success) {
           console.log("email not send message:", emailResponse.message);
-          return { success: false, message: emailResponse.message };
+          return { success: false, error: emailResponse.message };
         }
         console.log("email success message:", emailResponse);
         // If success in sending email
@@ -83,7 +83,7 @@ export async function registerTravelAgent(
         console.error("Please try again! Can't create the account");
         return {
           success: false,
-          message: "Please try again! Can't create the account",
+          error: "Please try again! Can't create the account",
         };
       }
       console.log("New TravelAgent Created", newTravelAgent);
@@ -99,11 +99,11 @@ export async function registerTravelAgent(
           "new TravelAgent created email not send message:",
           emailResponse.message
         );
-        return { success: false, message: emailResponse.message };
+        return { success: false, error: emailResponse.message };
       }
       // If success in sending email
       console.log(
-        "new TravelAgent created email send message:",
+        "new TravelAgent created email successfully:",
         emailResponse.message
       );
       return {
@@ -121,7 +121,7 @@ export async function registerTravelAgent(
 // Following is the server action to verify the otp entered by the user
 export async function verifyCode({
   email,
-  userVerifyCode
+  userVerifyCode,
 }: VerifyCodeProps): Promise<ResponseType> {
   try {
     const existingTravelAgent = await client.travelAgent.findUnique({
@@ -134,7 +134,7 @@ export async function verifyCode({
     // If the email dose not exists then
     if (!existingTravelAgent) {
       console.error("verify user not found!");
-      return { success: false, error: "User not found!",status:400};
+      return { success: false, error: "User not found!", status: 400 };
     }
 
     const currentTime = new Date();
@@ -163,7 +163,7 @@ export async function verifyCode({
     }
     return { success: true, message: "Email verified successfully" };
   } catch (err) {
-    console.error("Error verifying end-user otp",err);
+    console.error("Error verifying end-user otp", err);
     return {
       success: false,
       error: "Error verifying end-user otp",
