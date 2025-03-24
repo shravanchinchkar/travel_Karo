@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { resend } from "../lib/resend";
-import { ResponseTpye } from "@/types/ResponseType";
+import { ResponseType } from "@/types/ResponseType";
 import TravelKaroVerifyEmailTemplate from "@/emails/verify-email-template";
 
 export async function sendVerificationEmail(
   name: string,
   email: string,
   verifyCode: string
-): Promise<ResponseTpye> {
+): Promise<ResponseType> {
   try {
     const { data, error } = await resend.emails.send({
       from: "TravelKaro Support <support@travelkaro.shravanchinchkar.me>",
