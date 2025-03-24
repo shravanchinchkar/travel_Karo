@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { toastStyle } from "@/lib/toast-style";
 import { Button } from "@/components/ui/button";
 import {signOut,useSession} from "next-auth/react";
 
