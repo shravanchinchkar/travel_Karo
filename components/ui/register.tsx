@@ -36,6 +36,8 @@ export const RegisterUser = () => {
 
     const validateUserInput = feRegisterTravelAgentInputs.safeParse(formData);
 
+
+    // If Input is invalid the 
     if (!validateUserInput.success) {
       console.log(
         "Invalid Inputs",
@@ -62,7 +64,7 @@ export const RegisterUser = () => {
     } else {
       setLoading(true);
       const res: ResponseType = await registerTravelAgent(formData);
-      console.log("Response is:",res);
+      console.log("Registration Response:",res);
       setLoading(false);
       if (res.error) {
         toast.error(res.error, toastStyle);

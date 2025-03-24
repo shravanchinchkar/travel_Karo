@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Plane, Hotel, Globe, Users } from "lucide-react";
 import Link from "next/link";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Plane, Hotel, Globe, Users } from "lucide-react";
 
 export default function Home() {
   return (

@@ -147,8 +147,7 @@ export async function verifyCode({
       console.error("Invalid OTP");
       return { success: false, error: "Invalid or expired OTP" };
     }
-
-    const updateSeller = await client.travelAgent.update({
+    const updateTravelAgent = await client.travelAgent.update({
       where: { email: email },
       data: {
         isVerified: true,
@@ -157,7 +156,7 @@ export async function verifyCode({
       },
     });
 
-    if (!updateSeller) {
+    if (!updateTravelAgent) {
       console.error("Error While Updating Verified seller");
       return { success: false, error: "Error While Updating Verified seller" };
     }
@@ -180,16 +179,16 @@ export async function resendOTP({
 }): Promise<ResponseType> {
   try {
     //Get the requested user from db
-    const user = await client.travelAgent.findFirst({
+    const existingTravelAgent = await client.travelAgent.findFirst({
       where: { email: email },
     });
 
     // If user not found
-    if (!user) {
-      return { success: false, error: "User not found" };
+    if (!existingTravelAgent) {
+      return { success: false, error: "Travel Agent not found" };
     }
     //If user is already Verified
-    if (user.isVerified) {
+    if (existingTravelAgent.isVerified) {
       return { success: false, message: "User already verified" };
     }
 
@@ -208,8 +207,8 @@ export async function resendOTP({
 
     //Resend the OTP to the which is to be verified
     const emailResponse = await sendVerificationEmail(
-      user.businessName,
-      user.email,
+      existingTravelAgent.businessName,
+      existingTravelAgent.email,
       newOTP
     );
 
@@ -226,6 +225,6 @@ export async function resendOTP({
     };
   } catch (error) {
     console.error("Error while resending OTP", error);
-    return { success: false, message: "Not able to resend otp" };
+    return { success: false, error: "Not able to resend otp" };
   }
 }
