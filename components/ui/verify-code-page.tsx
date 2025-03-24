@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import Link from "next/link";
 import { toast } from "react-hot-toast";
@@ -72,10 +72,10 @@ export const VerifyCodePage = () => {
           </div>
         </div>
 
-        <div className="mt-[1rem] flex flex-col gap-[0.3rem] items-center text-[#123524]">
+        <div className="flex flex-col gap-[0.3rem] items-center text-gray-900">
           <p className="font-medium">Enter Your OTP:</p>
           <input
-            className="font-[Poppins] lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] border-[2px] border-gray-400 text-center outline-none placeholder:font-[Poppins] lg:text-[1rem] xl:text-[1.1rem] px-[2rem] py-[1.5rem] rounded-[28px] text-[#123524] text-3xl"
+            className="lg:w-[11rem] xl:w-[17.3125rem] h-[1.8125rem] border-[2px] border-gray-400 text-center outline-none lg:text-[1rem] xl:text-[1.1rem] px-[2rem] py-[1.5rem] rounded-[28px] text-[#123524] text-3xl"
             type="text"
             value={userVerifyCode}
             onChange={(e) => {

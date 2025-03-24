@@ -184,7 +184,7 @@ export const RegisterUser = () => {
           <div>
             <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+              className={`w-full bg-blue-600 hover:bg-blue-700 text-white ${loading === true ? "cursor-not-allowed" : "cursor-pointer"}`}
               disabled={loading}
             >
               {loading ? (

@@ -7,11 +7,25 @@ export default function Home() {
   return (
     <>
       <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-[2rem]">
-
-        <nav className="flex justify-start">
-          <Link className="flex flex-col items-start gap-0 leading-[40px] ml-[9rem]" href="/"> 
+        <nav className="flex justify-between items-center mx-[9rem]">
+          <Link
+            className="flex flex-col items-start gap-0 leading-[40px]"
+            href="/"
+          >
             <h1 className="text-[3rem] font-bold text-gray-900">Travel Karo</h1>
-            <h2 className="text-lg  text-gray-600 ml-[0.5rem]">Life is a journey</h2>
+            <h2 className="text-lg  text-gray-600 ml-[0.5rem]">
+              Life is a journey
+            </h2>
+          </Link>
+
+          <Link href="/auth/signin">
+            <Button
+              className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white"
+              variant="outline"
+              size="lg"
+            >
+              Sign In
+            </Button>
           </Link>
         </nav>
 
@@ -35,11 +49,6 @@ export default function Home() {
                     Get Started
                   </Button>
                 </Link>
-                <Link href="/auth/signin">
-                  <Button className="cursor-pointer" variant="outline" size="lg">
-                    Sign In
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>
@@ -49,7 +58,6 @@ export default function Home() {
         <div className="sm:py-32 md:p-[2rem]">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-
               <Card className="p-6 hover:shadow-lg transition-shadow border-gray-300">
                 <Plane className="h-12 w-12 text-blue-600 mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Share Deals</h3>
