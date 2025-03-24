@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { toastStyle } from "@/lib/toast-style";
 import { Button } from "@/components/ui/button";
-import { signIn, signOut,useSession} from "next-auth/react";
+import {signOut,useSession} from "next-auth/react";
 
 export const NavBar = () => {
   const router = useRouter();
