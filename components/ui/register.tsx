@@ -223,7 +223,7 @@ export const RegisterUser = () => {
         <div className="text-center text-sm">
           Already have an account?{" "}
           <Link
-            href="/auth/login"
+            href="/signin"
             className="text-blue-600 hover:text-blue-500"
           >
             Sign in
