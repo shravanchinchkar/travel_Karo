@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
@@ -25,11 +25,12 @@ export const LoginUser = () => {
     passwordError: "",
   });
   const [loading, setLoading] = useState(false);
-
-  const handleSignIn = async () => {
+  const [loadingGoogleSignIn, setLoadingGoogleSignIn] = useState(false);
+  const handleSignInCredentials = async () => {
+    //Validate the User's Input
     const validateUserInput = feSignInInputs.safeParse(formData);
-
     if (!validateUserInput.success) {
+      console.log("Invalid SignIn Inputs");
       setInputError({
         emailError:
           validateUserInput.error.flatten().fieldErrors.email?.toString() || "",
@@ -38,14 +39,15 @@ export const LoginUser = () => {
           "",
       });
     }
-    else{
+    // If the signin inputs are valid then execute the below code
+    else {
       setLoading(true);
-      const res=await signIn("credentials",{
-        email:formData.email,
-        password:formData.password,
-        redirect:false
-      })
-      console.log("SignIn Resposne:",res);
+      const res = await signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+      });
+      console.log("SignIn Resposne:", res);
       setLoading(false);
 
       if (res?.error) {
@@ -57,13 +59,12 @@ export const LoginUser = () => {
         };
         console.log("signin  error :", errorResponse);
         toast.error("Signin Failed", toastStyle);
-      }
-      else if (res?.ok) {
+      } else if (res?.ok) {
         // Check session to determine verification status
         const sessionResponse = await fetch("/api/auth/session");
         const session = await sessionResponse.json();
         console.log("session in signin:", session);
-  
+
         if (session?.user?.isVerified) {
           console.log("Email already Verified signin successful!");
           toast.success("Signin successful!", toastStyle);
@@ -73,6 +74,35 @@ export const LoginUser = () => {
           router.push(`/verify?email=${formData.email}`);
         }
       }
+    }
+  };
+
+  const handleSignInWithGoogle = async () => {
+    console.log("click");
+    try {
+      console.log("Google hit!");
+      setLoadingGoogleSignIn(true);
+      const result = await signIn("google", {
+        callbackUrl: "/",
+        redirect: false,
+      });
+      setLoadingGoogleSignIn(false);
+
+      if (result?.error) {
+        toast.error(
+          result.error === "AccessDenied"
+            ? "Access denied. Please check your credentials."
+            : "Sign-in failed. Please try again.",
+          toastStyle
+        );
+      } else if (result?.ok) {
+        console.log("Ok Google  Sigin!")
+        toast.success("Sign-in Successful", toastStyle);
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      toast.error("An unexpected error occurred during sign-in", toastStyle);
     }
   };
 
@@ -129,46 +159,17 @@ export const LoginUser = () => {
           {/* Following is the signin with credentials button */}
           <Button
             className="w-full text-white cursor-pointer bg-blue-600 hover:bg-blue-700"
-            onClick={handleSignIn}
+            onClick={handleSignInCredentials}
             disabled={loading}
           >
-            {loading?<LoadingUI/>:"Sign in"}
+            {loading ? <LoadingUI /> : "Sign in"}
           </Button>
 
           {/* Following is the signin with google button */}
-          {/* <button
+          <button
             className="lg:w-[13rem] lg:h-[3rem] 2xl:w-[13rem] 2xl:h-[3.5rem] flex justify-evenly items-center bg-[#fff] border-[2px] border-[#8C8C8C] rounded-l-full rounded-r-full cursor-pointer"
-            disabled={loading}
-            onClick={async () => {
-              console.log("click")
-              try {
-                console.log("Google hit!");
-                setLoading(true);
-                const result = await signIn("google", {
-                  callbackUrl: "/",
-                  redirect: false,
-                });
-
-                if (result?.error) {
-                  toast.error(
-                    result.error === "AccessDenied"
-                      ? "Access denied. Please check your credentials."
-                      : "Sign-in failed. Please try again.",
-                    toastStyle
-                  );
-                } else if (result?.ok) {
-                  setLoading(false);
-                  toast.success("Sign-in Successful", toastStyle);
-                  router.push("/");
-                }
-              } catch (error) {
-                console.error("Sign-in error:", error);
-                toast.error(
-                  "An unexpected error occurred during sign-in",
-                  toastStyle
-                );
-              }
-            }}
+            disabled={loadingGoogleSignIn}
+            onClick={handleSignInWithGoogle}
           >
             <div className="lg:w-[1.5rem] lg:h-[1.5rem] 2xl:w-[1.80619rem] 2xl:h-[1.80619rem] relative">
               <Image
@@ -179,7 +180,7 @@ export const LoginUser = () => {
               />
             </div>
             <div className="text-[#1F1F1F] lg:text-[1rem] 2xl:text-[1rem] font-medium">
-              {loading ? (
+              {loadingGoogleSignIn ? (
                 <>
                   <svg
                     aria-hidden="true"
@@ -204,7 +205,7 @@ export const LoginUser = () => {
                 "Sign in with Google"
               )}
             </div>
-          </button> */}
+          </button>
         </div>
         <div className="text-center text-sm">
           Don&apos;t have an account?{" "}

@@ -17,7 +17,6 @@ export const NavBar = () => {
 
   const handleSignOut=async()=>{
     await signOut();
-    toast.success("Signed Out",toastStyle)
   }
   return (
     <nav className="flex justify-between items-center mx-[9rem]">
@@ -29,7 +28,7 @@ export const NavBar = () => {
       </Link>
 
       <Button
-        className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white"
+        className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-[1.15rem]"
         variant="outline"
         size="lg"
         onClick={session.status==="authenticated"?handleSignOut:handleSignIn}
