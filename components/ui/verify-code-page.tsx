@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { toastStyle } from "@/lib/toast-style";
 import { verifyCode } from "@/app/actions/auth";
 import { useSearchParams } from "next/navigation";
@@ -17,7 +17,7 @@ export const VerifyCodePage = () => {
   const [loading, setLoading] = useState(false);
   const [userVerifyCode, setUserVerifyCode] = useState("");
 
-  let toastId: string;
+  let toastId:string;
 
   useEffect(() => {
     toastId = toast.loading("Verify Your Email", toastStyle);
