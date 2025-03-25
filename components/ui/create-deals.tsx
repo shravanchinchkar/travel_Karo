@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { toastStyle } from "@/lib/toast-style";
 import {
   Select,
   SelectContent,
@@ -15,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { title } from "process";
 
 export const CreateDeals = () => {
   const router = useRouter();
@@ -41,6 +44,7 @@ export const CreateDeals = () => {
     console.log("Form Data is:", formData);
     const validateInput = dealTypes.safeParse(formData);
     if (!validateInput.success) {
+      console.log("Invalid Input Deal");
       setInputError({
         titleError:
           validateInput.error.flatten().fieldErrors.title?.toString() || "",
@@ -59,6 +63,18 @@ export const CreateDeals = () => {
           validateInput.error.flatten().fieldErrors.spots?.toString() || "",
       });
     } else {
+      console.log("Valid Input Deals")
+      toast.success("Deal Created!", toastStyle);
+      setFormData({
+        title: "",
+        description: "",
+        price: "",
+        category: "",
+        startDate: "",
+        endDate: "",
+        spots: "",
+      });
+      router.push("/dashboard")
     }
   };
 
@@ -69,6 +85,7 @@ export const CreateDeals = () => {
           <h1 className="text-2xl font-bold mb-8">Create New Deal</h1>
 
           <form className="space-y-6">
+            {/* Title */}
             <div>
               {inputError.titleError ? (
                 <div className="text-red-500">{inputError.titleError}</div>
@@ -77,13 +94,14 @@ export const CreateDeals = () => {
               <Input
                 id="title"
                 value={formData.title}
-                onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
-                }
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, title: e.target.value });
+                  setInputError({ ...inputError, titleError: "" });
+                }}
               />
             </div>
 
+            {/* Description */}
             <div>
               {inputError.descriptionError ? (
                 <div className="text-red-500">
@@ -94,13 +112,14 @@ export const CreateDeals = () => {
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, description: e.target.value });
+                  setInputError({ ...inputError, descriptionError: "" });
+                }}
               />
             </div>
 
+            {/* Price and category */}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 {inputError.priceError ? (
@@ -111,10 +130,10 @@ export const CreateDeals = () => {
                   id="price"
                   type="number"
                   value={formData.price}
-                  onChange={(e) =>
-                    setFormData({ ...formData, price: e.target.value })
-                  }
-                  required
+                  onChange={(e) => {
+                    setFormData({ ...formData, price: e.target.value });
+                    setInputError({ ...inputError, priceError: "" });
+                  }}
                 />
               </div>
 
@@ -125,9 +144,10 @@ export const CreateDeals = () => {
                 <Label htmlFor="category">Category</Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, category: value })
-                  }
+                  onValueChange={(value) => {
+                    setFormData({ ...formData, category: value });
+                    setInputError({ ...inputError, categoryError: "" });
+                  }}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -162,20 +182,23 @@ export const CreateDeals = () => {
               </div>
             </div>
 
+            {/* start and end date */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-              {inputError.startDateError ? (
-                <div className="text-red-500">{inputError.startDateError}</div>
-              ) : null}
+                {inputError.startDateError ? (
+                  <div className="text-red-500">
+                    {inputError.startDateError}
+                  </div>
+                ) : null}
                 <Label htmlFor="startDate">Start Date</Label>
                 <Input
                   id="startDate"
                   type="date"
                   value={formData.startDate}
-                  onChange={(e) =>
-                    setFormData({ ...formData, startDate: e.target.value })
-                  }
-                  required
+                  onChange={(e) => {
+                    setFormData({ ...formData, startDate: e.target.value });
+                    setInputError({ ...inputError, startDateError: "" });
+                  }}
                 />
               </div>
 
@@ -188,14 +211,15 @@ export const CreateDeals = () => {
                   id="endDate"
                   type="date"
                   value={formData.endDate}
-                  onChange={(e) =>
-                    setFormData({ ...formData, endDate: e.target.value })
-                  }
-                  required
+                  onChange={(e) => {
+                    setFormData({ ...formData, endDate: e.target.value });
+                    setInputError({ ...inputError, endDateError: "" });
+                  }}
                 />
               </div>
             </div>
 
+            {/* Available spots */}
             <div>
               {inputError.spotsError ? (
                 <div className="text-red-500">{inputError.spotsError}</div>
@@ -205,16 +229,17 @@ export const CreateDeals = () => {
                 id="spots"
                 type="number"
                 value={formData.spots}
-                onChange={(e) =>
-                  setFormData({ ...formData, spots: e.target.value })
-                }
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, spots: e.target.value });
+                  setInputError({ ...inputError, spotsError: "" });
+                }}
               />
             </div>
 
             <Button
+              type="button"
               onClick={handleSubmitDeal}
-              className="w-full bg-blue-600 text-white"
+              className="w-full bg-blue-600 text-white cursor-pointer"
             >
               Create Deal
             </Button>
